@@ -6,22 +6,19 @@
 	.btn{
 		@apply  shadow-md rounded-2xl w-12 h-12  font-medium text-xl flex justify-center items-center;
 	}
-	.btn-yellow {
-		@apply bg-yellow-100 shadow-md rounded-2xl w-12 h-12 text-yellow-600 font-medium flex justify-center items-center;
+	.btn-dark {
+		@apply bg-black  text-white ;
 	}
 	.btn-orange {
-			 @apply bg-yellow-500 shadow-md rounded-2xl w-12 h-12 text-white font-medium text-xl flex justify-center items-center;
+			 @apply bg-yellow-500  text-white;
 	}
 	.btn-grey {
-			 @apply bg-gray-200 shadow-md rounded-2xl w-12 h-12 text-black font-medium flex justify-center items-center;
+			 @apply bg-gray-200  text-black ;
 	}
 	.btn-green {
-			 @apply bg-green-500 shadow-md rounded-2xl w-12 h-12 text-white font-medium text-xl flex justify-center items-center;
-	}
-	.btn-grey-jumbo {
-			 @apply bg-gray-200 shadow-md rounded-2xl w-full h-12 text-black font-medium flex justify-center items-center;
+			 @apply bg-green-500  text-white;
 	}
 	.calculator-container{
-		@apply bg-[#f5f5f5] w-fit p-5 rounded-xl mt-60 mx-auto
+		@apply bg-[#f5f5f5] w-fit p-5 rounded-xl mt-60 mx-auto  grid  gap-2 grid-cols-4
 	}
 }

@@ -1,13 +1,15 @@
 <script>
-	import '../routes/styles.css'
+	import '../routes/styles.css';
 
-  export let value, customClass;
+	export let btnInfo;
 </script>
 
-<button class="{customClass} btn" on:click={console.log("Click en el boton ",value)}>
-  {value}
+<button
+	class="{btnInfo.customClass} btn"
+	on:click={console.log('Click en el boton ', btnInfo.value)}
+>
+	{btnInfo.value}
 </button>
 
 <style>
-	
 </style>
