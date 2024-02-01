@@ -2,23 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components{
-	.btn{
-		@apply  shadow-md rounded-2xl w-12 h-12  font-medium text-xl flex justify-center items-center;
+@layer components {
+	.btn {
+		@apply shadow-md rounded-2xl w-14 h-14 font-medium text-xl flex justify-center items-center hover:bg-opacity-80;
 	}
+
 	.btn-dark {
-		@apply bg-black  text-white ;
+		@apply bg-black text-white;
 	}
+
 	.btn-orange {
-			 @apply bg-yellow-500  text-white;
+		@apply bg-yellow-500 text-white;
 	}
+
 	.btn-grey {
-			 @apply bg-gray-200  text-black ;
+		@apply bg-zinc-300 text-black;
 	}
+
 	.btn-green {
-			 @apply bg-green-500  text-white;
+		@apply bg-green-500 text-white;
 	}
-	.calculator-container{
-		@apply bg-[#f5f5f5] w-fit p-5 rounded-xl mt-60 mx-auto  grid  gap-2 grid-cols-4
+
+	.calculator-container {
+		@apply w-[310px] mx-auto mt-60  rounded-3xl border-[1px] border-white border-opacity-10 overflow-hidden
+	}
+
+	.operations-container {
+		@apply w-full min-h-28 bg-[#2C2D34]  p-7 flex flex-col justify-center items-end text-xl text-gray-200 gap-2 
+	}
+
+	.buttons-container {
+		@apply grid gap-2 grid-cols-4 bg-[#2C2D34]  p-7
 	}
 }
