@@ -1,32 +1,21 @@
 <script>
 	import '../routes/styles.css';
+	import axios from 'axios';
+	let HistoryItems = [];
 
-	let historyArray = [
-		'2 - 2- 2- 2- 22 - 2- 2- 2- 22 - 2- 2- 2- 22 - 2- 2- 2- 22 - 2- 2- 2- 22 - 2- 2- 2- 2',
-		'2 - 2',
-		'2 - 2- 2- 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2',
-		'2 - 2'
-	];
+	axios
+		.get('http://localhost:9090/history')
+		.then(function (response) {
+		
+			console.log(response)
+			HistoryItems = response;
+		})
+		.catch(function (error) {
+	
+			console.log(error);
+		})
+		.finally(function () {
+		});
 </script>
 
 <div class="history-container">
@@ -34,10 +23,15 @@
 		Historial
 	</h1>
 	<ul class="list-container">
-		{#each historyArray as operation}
-			<li class="list-item hover:bg-[#2C2D34]">{operation}</li>
-		{/each}
+		{#if HistoryItems.length > 0}
+			{#each HistoryItems as operation (operation.id)}
+				<li class="list-item hover:bg-[#2C2D34]">{operation.operation}</li>
+			{/each}
+		{:else}
+			<li class="empty-history">No hay datos</li>
+		{/if}
 	</ul>
+
 	<div class="  w-full h-[36px] font-mono tracking-widest"></div>
 </div>
 
@@ -46,9 +40,12 @@
 		@apply w-[380px] h-[500px]  bg-opacity-30 rounded-3xl border-[1px] border-white border-opacity-10 overflow-hidden flex  flex-col justify-start items-center;
 	}
 	.list-container {
-		@apply bg-black bg-opacity-30 w-full h-full text-gray-300 text-center overflow-y-scroll pt-1;
+		@apply bg-black bg-opacity-30 w-full h-full text-gray-300 text-center overflow-y-scroll;
 	}
 	.list-item {
-		@apply p-0 border-b-[.5px] border-white border-opacity-5 px-5 py-1;
+		@apply p-0 border-b-[.5px] border-white border-opacity-5 px-5 pt-1;
+	}
+	.empty-history {
+		@apply w-full h-full  bg-black bg-opacity-30 text-center text-xl uppercase font-mono pt-20;
 	}
 </style>
