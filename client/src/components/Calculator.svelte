@@ -1,11 +1,10 @@
 <script>
 	//IMPORTS
 	import '../routes/styles.css';
-	import Button from './Button.svelte';
 	import { evaluate, prodDependencies, string } from 'mathjs';
 	import { Toaster, toast } from 'svelte-sonner';
 
-	//ARRAY DE OBJETOS PARA MAPEAR BOTONES
+	//Array de objetos botones para mapear
 	const buttons = [
 		{ id: 'clear', customClass: 'btn-dark', value: 'C' },
 		{ id: 'open-parenthesis', customClass: 'btn-orange', value: '(' },
@@ -29,59 +28,62 @@
 	];
 
 	//ESTADOS
+
 	//Valor iniciar del input
 	let inputValue = '';
 	//Operacion previa, para no hacer otra vez el calculo si se sigue apretando el = y el input es el mismo
 	let previusOperation = '';
 	//Resultado
-	let result = '';
+	let result = '0';
 
+	//FUNCIONES
 	//Limpia la operacion
 	const clearInput = () => {
-		inputValue = '';
-		previusOperation = '';
+		inputValue = previusOperation = result = '';
 	};
 	//Cálculo del resultado
 	const calculateResult = () => {
 		if (inputValue) {
-			try {
-				if (inputValue === previusOperation) {
-					toast.info('No esperes un resultado diferente si la operación es la misma');
-				} else {
+			if (inputValue === previusOperation) {
+				toast.info('Recuerda que la operación es la misma. El resultado se mantendrá igual.');
+			} else {
+				try {
 					result = evaluate(inputValue);
 					previusOperation = inputValue;
+				} catch (error) {
+					toast.warning('Parece que hay un error de sintaxis');
 				}
-			} catch (error) {
-				toast.warning('Parece que hay un error de sintaxis');
 			}
 		} else {
 			toast.error('No hay valores para realizar la operación');
 		}
 	};
 
+	//Funcion a ejecutar siempre que se clickee un boton
 	const handleOperation = (value) => {
+		//Si se apreta el signo igual, se hace el calculo y un par de validaciones
 		if (value == '=') {
 			calculateResult();
 		} else if (value == 'C') {
+			//Si se apreta para C, se hace un clear de todos los valores
 			clearInput();
 		} else {
+			//Si se apreta cualquier otro boton, simplemente se lo agrega a la cadena para hacer el evaluate de mathjs
 			inputValue += value;
 		}
 	};
 </script>
 
 <div class="calculator-container">
+	<!-- Mensaje de alerta -->
 	<Toaster richColors position="bottom-center" />
 	<section class="operations-container">
-		<input
-			class="bg-transparent outline-none cursor-default"
-			type="text"
-			name="input"
-			id="cal"
-			value={inputValue}
-		/>
-		<span class="text-3xl text-white tracking-wide">{result}</span>
+		<!-- Input donde se va escribiendo la operacion -->
+		<input class="input" type="text" name="input" id="cal" value={inputValue} />
+		<!-- Resultado de la operacion -->
+		<span class="result">{result.toLocaleString()}</span>
 	</section>
+	<!-- Teclado / Mapeo de botones -->
 	<section class="buttons-container">
 		{#each buttons as button}
 			<button
@@ -93,4 +95,12 @@
 </div>
 
 <style>
+	.calculator-container {
+		@apply w-[310px] rounded-3xl border-[1px] border-white border-opacity-10 overflow-hidden;
+	}
+
+
+	.operations-container {
+		@apply w-full min-h-28 p-7 flex flex-col justify-center items-end text-xl text-gray-300 gap-2 text-clip bg-black bg-opacity-30;
+	}
 </style>
