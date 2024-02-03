@@ -3,7 +3,7 @@
 	import '../routes/styles.css';
 	import { evaluate, prodDependencies, string } from 'mathjs';
 	import { Toaster, toast } from 'svelte-sonner';
-
+	import axios from 'axios';
 	//Array de objetos botones para mapear
 	const buttons = [
 		{ id: 'clear', customClass: 'btn-dark', value: 'C' },
@@ -37,6 +37,22 @@
 	let result = '0';
 
 	//FUNCIONES
+
+	//Postea la operacion al historial
+
+	const saveOperation = () => {
+		axios
+			.post('http://localhost:9090/history', {
+				operation: inputValue.toString(),
+				result: result.toString()
+			})
+			.then(function (response) {
+				console.log(response);
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	};
 	//Limpia la operacion
 	const clearInput = () => {
 		inputValue = previusOperation = result = '';
@@ -50,8 +66,10 @@
 				try {
 					result = evaluate(inputValue);
 					previusOperation = inputValue;
+					saveOperation();
 				} catch (error) {
 					toast.warning('Parece que hay un error de sintaxis');
+					console.log(error);
 				}
 			}
 		} else {
@@ -98,7 +116,6 @@
 	.calculator-container {
 		@apply w-[310px] rounded-3xl border-[1px] border-white border-opacity-10 overflow-hidden;
 	}
-
 
 	.operations-container {
 		@apply w-full min-h-28 p-7 flex flex-col justify-center items-end text-xl text-gray-300 gap-2 text-clip bg-black bg-opacity-30;

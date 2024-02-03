@@ -3,19 +3,20 @@
 	import axios from 'axios';
 	let HistoryItems = [];
 
+	// fetch('http://localhost:9090/history', {mode: 'no-cors'})
+	// .then( response => response.json)
+	// .then(data => console.log(data))
+
 	axios
 		.get('http://localhost:9090/history')
 		.then(function (response) {
-		
-			console.log(response)
-			HistoryItems = response;
+			console.log(response);
+			HistoryItems = response.data;
 		})
 		.catch(function (error) {
-	
-			console.log(error);
+			console.error(error);
 		})
-		.finally(function () {
-		});
+		.finally(function () {});
 </script>
 
 <div class="history-container">
