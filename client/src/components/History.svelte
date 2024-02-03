@@ -1,40 +1,32 @@
 <script>
-	import '../routes/styles.css';
-	import axios from 'axios';
-	let HistoryItems = [];
+  import '../routes/styles.css';
+  import { getOperationsHistoy } from '../utils/Get';
 
-	// fetch('http://localhost:9090/history', {mode: 'no-cors'})
-	// .then( response => response.json)
-	// .then(data => console.log(data))
+  let HistoryItems = [];
 
-	axios
-		.get('http://localhost:9090/history')
-		.then(function (response) {
-			console.log(response);
-			HistoryItems = response.data;
-		})
-		.catch(function (error) {
-			console.error(error);
-		})
-		.finally(function () {});
+  getOperationsHistoy()
+    .then(result => {
+      HistoryItems = result;
+      console.log(HistoryItems);
+    })
+    .catch(error => console.error(error));
 </script>
 
 <div class="history-container">
-	<h1 class="text-lg uppercase text-gray-50 w-full py-1 text-center font-mono tracking-widest">
-		Historial
-	</h1>
-	<ul class="list-container">
-		{#if HistoryItems.length > 0}
-			{#each HistoryItems as operation (operation.id)}
-				<li class="list-item hover:bg-[#2C2D34]">{operation.operation}</li>
-			{/each}
-		{:else}
-			<li class="empty-history">No hay datos</li>
-		{/if}
-	</ul>
-
-	<div class="  w-full h-[36px] font-mono tracking-widest"></div>
+  <h2 class="title">Historial</h2>
+  <ul class="list-container">
+    {#if HistoryItems.length > 0}
+      {#each HistoryItems as operation (operation.id)}
+        <li class="list-item hover:bg-[#2C2D34]">{operation.operation}</li>
+      {/each}
+    {:else}
+      <li class="empty-history">No hay datos</li>
+    {/if}
+  </ul>
+  <div class="  w-full h-[36px] font-mono tracking-widest"></div>
 </div>
+
+
 
 <style>
 	.history-container {
@@ -48,5 +40,8 @@
 	}
 	.empty-history {
 		@apply w-full h-full  bg-black bg-opacity-30 text-center text-xl uppercase font-mono pt-20;
+	}
+	.title {
+		@apply text-lg uppercase text-gray-50 w-full py-1 text-center font-mono tracking-widest;
 	}
 </style>

@@ -1,58 +1,15 @@
 <script>
-	//IMPORTS
 	import '../routes/styles.css';
-	import { evaluate, prodDependencies, string } from 'mathjs';
+	import { evaluate } from 'mathjs';
 	import { Toaster, toast } from 'svelte-sonner';
-	import axios from 'axios';
-	//Array de objetos botones para mapear
-	const buttons = [
-		{ id: 'clear', customClass: 'btn-dark', value: 'C' },
-		{ id: 'open-parenthesis', customClass: 'btn-orange', value: '(' },
-		{ id: 'close-parenthesis', customClass: 'btn-orange', value: ')' },
-		{ id: 'divide', customClass: 'btn-orange', value: '/' },
-		{ id: 'seven', customClass: 'btn-grey', value: '7' },
-		{ id: 'eight', customClass: 'btn-grey', value: '8' },
-		{ id: 'nine', customClass: 'btn-grey', value: '9' },
-		{ id: 'multiply', customClass: 'btn-orange', value: '*' },
-		{ id: 'four', customClass: 'btn-grey', value: '4' },
-		{ id: 'five', customClass: 'btn-grey', value: '5' },
-		{ id: 'six', customClass: 'btn-grey', value: '6' },
-		{ id: 'subtract', customClass: 'btn-orange', value: '-' },
-		{ id: 'one', customClass: 'btn-grey', value: '1' },
-		{ id: 'two', customClass: 'btn-grey', value: '2' },
-		{ id: 'three', customClass: 'btn-grey', value: '3' },
-		{ id: 'add', customClass: 'btn-orange', value: '+' },
-		{ id: 'zero', customClass: 'btn-grey col-span-2 w-full', value: '0' },
-		{ id: 'decimal', customClass: 'btn-grey', value: '.' },
-		{ id: 'equals', customClass: 'btn-green', value: '=' }
-	];
+	import { postOperation } from '../utils/Post';
+	import { Buttons } from '../utils/Buttons';
 
-	//ESTADOS
-
-	//Valor iniciar del input
 	let inputValue = '';
-	//Operacion previa, para no hacer otra vez el calculo si se sigue apretando el = y el input es el mismo
 	let previusOperation = '';
-	//Resultado
 	let result = '0';
 
 	//FUNCIONES
-
-	//Postea la operacion al historial
-
-	const saveOperation = () => {
-		axios
-			.post('http://localhost:9090/history', {
-				operation: inputValue.toString(),
-				result: result.toString()
-			})
-			.then(function (response) {
-				console.log(response);
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
-	};
 	//Limpia la operacion
 	const clearInput = () => {
 		inputValue = previusOperation = result = '';
@@ -66,7 +23,7 @@
 				try {
 					result = evaluate(inputValue);
 					previusOperation = inputValue;
-					saveOperation();
+					postOperation(inputValue, result);
 				} catch (error) {
 					toast.warning('Parece que hay un error de sintaxis');
 					console.log(error);
@@ -103,7 +60,7 @@
 	</section>
 	<!-- Teclado / Mapeo de botones -->
 	<section class="buttons-container">
-		{#each buttons as button}
+		{#each Buttons as button}
 			<button
 				class="{button.customClass} btn"
 				on:click={() => handleOperation(button.value.toString())}>{button.value}</button
