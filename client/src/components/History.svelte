@@ -9,7 +9,7 @@
 		// Tu lógica o función que quieres ejecutar al montar el componente
 		getHistory();
 	});
-
+	const formateador = new Intl.NumberFormat('de-DE', {});
 	const getHistory = () => {
 		getOperationsHistoy()
 			.then((result) => {
@@ -26,7 +26,10 @@
 	<ul class="list-container">
 		{#if HistoryItems.length > 0}
 			{#each HistoryItems as operation (operation.id)}
-				<li class="list-item hover:bg-[#2C2D34]">{operation.operation}</li>
+				<li class="list-item hover:bg-[#2C2D34]">
+					<span>{operation.operation}</span>
+					<span class="text-lg font-[500]">{formateador.format(operation.result)}</span>
+				</li>
 			{/each}
 		{:else}
 			<li class="empty-history">No hay datos</li>
@@ -43,7 +46,7 @@
 		@apply bg-black bg-opacity-30 w-full h-full text-gray-300 text-center overflow-y-scroll;
 	}
 	.list-item {
-		@apply p-0 border-b-[.5px] border-white border-opacity-5 px-5 pt-1;
+		@apply p-0 border-b-[.5px] border-white border-opacity-5 px-5 pt-1 text-right flex flex-col;
 	}
 	.empty-history {
 		@apply w-full h-full  bg-black bg-opacity-30 text-center text-xl uppercase font-mono pt-20;
