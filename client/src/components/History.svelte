@@ -43,10 +43,10 @@
 		@apply w-[380px] h-[500px]  bg-opacity-30 rounded-3xl border-[1px] border-white border-opacity-10 overflow-hidden flex  flex-col justify-start items-center;
 	}
 	.list-container {
-		@apply bg-black bg-opacity-30 w-full h-full text-gray-300 text-center overflow-y-scroll;
+		@apply bg-black bg-opacity-30 w-full h-full text-gray-300 text-center overflow-y-scroll ;
 	}
 	.list-item {
-		@apply p-0 border-b-[.5px] border-white border-opacity-5 px-5 pt-1 text-right flex flex-col;
+		@apply p-0 border-b-[.5px] border-white border-opacity-5 px-2 py-2 text-right flex flex-col tracking-wide ;
 	}
 	.empty-history {
 		@apply w-full h-full  bg-black bg-opacity-30 text-center text-xl uppercase font-mono pt-20;
