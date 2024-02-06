@@ -1,4 +1,3 @@
-LAST UPDATE 1/2 20:30
-Por ahora hay solamente front.
 
-"cd client" => "npm run dev" Para correr la app
+Ir a "client" y usar npm run dev para correr el front
+Ir a "server" y usar go run main.go para correr el back
